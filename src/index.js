@@ -3,7 +3,6 @@
  * index.js: main entry point of the app
  * eslint is disabled as there are references to window & documnet object.
  */
-/* eslint-disable  */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -82,7 +81,7 @@ registerServiceWorker();
       document.body.removeChild(dimmer);
       document.body.setAttribute('class', '');
       window.removeEventListener('load', removeDimmer);
-      alert("Production Build: 04-Aug");
+      alert("Production Build: 11-Aug");
     }, delay);
   }
   

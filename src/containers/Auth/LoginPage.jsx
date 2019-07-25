@@ -18,10 +18,10 @@ class LoginPage extends Component {
     this.props.setBottomBarVisibility();
   }
   render() {
-    if(this.props.isLoggedIn) {
+    if (this.props.isLoggedIn) {
       return (
         <Redirect to="/" />
-      )
+      );
     }
     return (
       <Container>
@@ -67,7 +67,7 @@ class LoginPage extends Component {
                     <LoginForm />
                   </Segment>
                   <Segment secondary attached basic style={{ padding: '2vh' }}>
-                    <Link to="/signup">                    
+                    <Link to="/signup">
                       <Button secondary fluid basic>
                         Sign Up Now
                       </Button>
@@ -84,8 +84,15 @@ class LoginPage extends Component {
     );
   }
 }
+
+LoginPage.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  removeBottomBarVisibility: PropTypes.func.isRequired,
+  setBottomBarVisibility: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => {
-  const { isLoggedIn, authenticating } = state.auth;
+  const { isLoggedIn } = state.auth;
   return {
     isLoggedIn,
   };
@@ -96,9 +103,5 @@ const mapDispatchToProps = dispatch => (
     setBottomBarVisibility,
   }, dispatch)
 );
-
-LoginPage.propTypes = {
-
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

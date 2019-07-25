@@ -21,12 +21,18 @@ const UpvoteButton = (props) => {
     <Button active={hasUpvoted} onClick={props.click}>
       {hasUpvoted ?
         <Icon color="red" name="thumbs up" fitted />
-        :
+       :
         <Icon name="thumbs up outline" />
       }
-      {props.count? props.count : null}
+      {props.count ? props.count : null}
     </Button>
   );
+};
+
+UpvoteButton.propTypes = {
+  hasUpvoted: PropTypes.bool.isRequired,
+  click: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
 };
 
 const UpvoteButtonBasic = (props) => {
@@ -43,15 +49,21 @@ const UpvoteButtonBasic = (props) => {
         <Icon color="red" name="like" />
         :
         <Icon color="grey" name="like" />
-      }
-      {props.count?
+        }
+      {props.count ?
         <Label.Detail>
-         {props.count} 
+          {props.count}
         </Label.Detail>
-      : null}
+        : null}
     </Button>
   );
-}
+};
+
+UpvoteButtonBasic.propTypes = {
+  hasUpvoted: PropTypes.bool.isRequired,
+  count: PropTypes.number.isRequired,
+  click: PropTypes.func.isRequired,
+};
 
 class Upvote extends Component {
   constructor(props) {
@@ -113,17 +125,13 @@ class Upvote extends Component {
 }
 
 Upvote.propTypes = {
-
+  uuid: PropTypes.string.isRequired,
+  basic: PropTypes.bool.isRequired,
+  fetchUpvotesStart: PropTypes.func.isRequired,
+  fetchUpvotesCancel: PropTypes.func.isRequired,
+  updateUpvoteStart: PropTypes.func.isRequired,
+  updateUpvoteCancel: PropTypes.func.isRequired,
 };
-
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    fetchUpvotesStart,
-    fetchUpvotesCancel,
-    updateUpvoteStart,
-    updateUpvoteCancel,
-  }, dispatch)
-);
 
 const mapStateToProps = (state, ownProps) => {
   if (ownProps.hasOwnProperty) {
@@ -139,5 +147,14 @@ const mapStateToProps = (state, ownProps) => {
     },
   };
 };
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    fetchUpvotesStart,
+    fetchUpvotesCancel,
+    updateUpvoteStart,
+    updateUpvoteCancel,
+  }, dispatch)
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Upvote);

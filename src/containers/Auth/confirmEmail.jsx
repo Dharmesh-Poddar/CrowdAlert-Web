@@ -68,10 +68,16 @@ const EmailSent = props => (
       </Button>
     </Segment>
   </div>
-
-
 );
-const EmailPrompt = props => (
+
+EmailSent.propTypes = {
+  sendEmailVerification: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string,
+  }).isRequired,
+};
+
+const EmailPrompt = () => (
   <div>
     <Message
       attached
@@ -155,7 +161,7 @@ class ConfirmEmail extends PureComponent {
               {!isEmailLink ?
                 <EmailSent
                   sendEmailVerification={this.props.sendEmailVerificationAuth}
-                  user={this. props.user}
+                  user={this.props.user}
                 />
               : null}
 
@@ -168,7 +174,16 @@ class ConfirmEmail extends PureComponent {
 }
 
 ConfirmEmail.propTypes = {
-
+  confirmEmailForm: PropTypes.shape({
+    email: PropTypes.bool,
+    isVerified: PropTypes.bool,
+    isVerifying: PropTypes.bool,
+    errors: PropTypes.bool,
+    message: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+  }).isRequired,
+  sendEmailVerificationAuth: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => {
   const { confirmEmailForm } = state.auth;

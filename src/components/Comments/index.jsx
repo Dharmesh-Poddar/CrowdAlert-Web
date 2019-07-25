@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Comment, Image, Card, Icon, Feed, Form, Responsive, Message, Button, Label } from 'semantic-ui-react';
+import { Comment, Image, Card, Icon, Feed, Form, Responsive, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -62,12 +62,12 @@ class CommentsSection extends Component {
             <Feed.Event>
               <Feed.Label
                 image={this.props.auth.user.photoURL ||
-                  `${STATIC_IMAGES}/meerkat.svg`}
+                 `${STATIC_IMAGES}/meerkat.svg`}
                 style={{ marginTop: '1rem' }}
               />
               <Feed.Content>
                 <Feed.Summary>
-                  Write a comment
+                Write a comment
                 </Feed.Summary>
                 <Feed.Extra text>
                   <Form onSubmit={this.handleSubmit}>
@@ -113,15 +113,25 @@ class CommentsSection extends Component {
               <Message.Header>Unable to Post Comment</Message.Header>
               <Message.Content>{this.props.comments.message}</Message.Content>
             </Message>
-            : null}
+          : null}
         </Card.Content>
         <Card.Content>
           <Comment.Group>
             {this.props.comments.comments.map(comment => (
               <Comment key={comment.key}>
-                <Comment.Avatar
+                <Image
                   src={this.props.comments.userData[comment.user].photoURL ||
                       `${STATIC_IMAGES}/meerkat.svg`}
+                  style={{
+                    borderRadius: '500rem',
+                    display: 'block',
+                    marginRight: '1rem',
+                    marginBottom: '1rem',
+                    width: '2.5em',
+                    height: 'auto',
+                    float: 'left',
+                    lineHeight: '1.2em',
+                  }}
                 />
                 <Comment.Content>
                   <Comment.Author as="a">
@@ -143,20 +153,20 @@ class CommentsSection extends Component {
               </Comment>
             ))}
             {this.props.comments.comments.length ?
-              null
+            null
             :
-              <center>
-                <Image
-                  src={`${STATIC_IMAGES}/meerkat.svg`}
-                  size="tiny"
-                  circular
-                  bordered
-                  centered
-                  disabled
-                />
-                <br />
-                <p>Nothing here</p>
-              </center>
+            <center>
+              <Image
+                src={`${STATIC_IMAGES}/meerkat.svg`}
+                size="tiny"
+                circular
+                bordered
+                centered
+                disabled
+              />
+              <br />
+              <p>Nothing here</p>
+            </center>
             }
           </Comment.Group>
         </Card.Content>
@@ -166,7 +176,21 @@ class CommentsSection extends Component {
 }
 
 CommentsSection.propTypes = {
-
+  fetchCommentsThread: PropTypes.func.isRequired,
+  postCommentToThread: PropTypes.func.isRequired,
+  threadId: PropTypes.string.isRequired,
+  comments: PropTypes.shape({
+    loading: PropTypes.bool,
+    threadId: PropTypes.number,
+    commentButtonLoading: PropTypes.bool,
+    errors: PropTypes.string,
+    message: PropTypes.string,
+    comments: PropTypes.array,
+    userData: PropTypes.object,
+  }).isRequired,
+  auth: PropTypes.shape({
+    user: PropTypes.object,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

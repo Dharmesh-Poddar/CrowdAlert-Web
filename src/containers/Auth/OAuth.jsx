@@ -29,7 +29,7 @@ class OAuth extends PureComponent {
 }
 
 OAuth.propTypes = {
-
+  signInOAuth: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => {
   const { loginForm } = state.auth;
